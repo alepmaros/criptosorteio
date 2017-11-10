@@ -99,3 +99,8 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# Migrations
+criptosorteio/sorteios/migrations/*
+criptosorteio/db.sqlite3
+
