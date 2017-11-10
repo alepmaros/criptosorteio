@@ -19,7 +19,10 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 
+from .views import IndexView
+
 urlpatterns = [
+    url(r'^$', IndexView.as_view()),
     url(r'^sorteios/', include('sorteios.urls')),
     url(r'^perfil/', include('django.contrib.auth.urls')),
     url(r'^admin/', admin.site.urls),
