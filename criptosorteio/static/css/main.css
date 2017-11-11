@@ -10,14 +10,49 @@ body {
   background: #000000;
   display: block;
   vertical-align: bottom;
-  width: 100vw;
-  min-height: 100vh;
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
+  height: 500px;
 }
 
 #particle-js .particles-js-canvas-el {
     width:100vw !important;
     height:100vh !important;
+}
+
+.header {
+  z-index: 1;
+  text-align: center;
+  color: #fff;
+  margin: 0 auto;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.site-title {
+  color: #0099ff;
+}
+
+.site-description {
+  margin-bottom: 20px;
+}
+
+.home-link {
+  padding-left: 35px;
+}
+
+.home-info {
+  margin: 50px 0px;
+}
+
+.home-item {
+  margin-bottom: 35px;
+}
+
+.home-subtitle {
+  color: #0099ff;
+  font-weight: bold;
+  font-size: 25px;
 }

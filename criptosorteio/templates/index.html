@@ -18,14 +18,11 @@
 
 <body>
     <div id="particles-js">
-        <div class="content">
-            <h1>
-                <span class="site-title">Criptosorteio</span>
-                <span class="site-description">Uma maneira prática, segura e confiável para realizar seus sorteios</span>
-            </h1>
-
-            <a class="link" href="{% url 'login' %}">Entrar</a>
-            <a class="link" href="{% url 'register' %}">Registrar</a>
+        <div class="header">
+            <div class="site-title"><h1>Criptosorteio</h1></div>
+            <div class="site-description">Uma maneira prática, segura e confiável para realizar seus sorteios</div>
+            <a href="{% url 'login' %}">Entrar</a>
+            <a class="home-link" href="{% url 'register' %}">Registrar</a>
         </div>
     </div>
 
@@ -33,6 +30,35 @@
     </section>
     <section id="projects">
     </section>
+
+    <div class="container">
+        <div class="row home-info">
+            <div class="home-item">
+                <div class="home-subtitle">
+                    O que é Criptosorteio?
+                </div>
+                <div class="home-text">
+                    Uma ferramenta que permite um sorteio que possa ser validado! Isso significa que qualquer pessoa pode verificar se o resultado do sorteio foi realmente aleatório ou foi propositalmente alterado!
+                </div>
+            </div>
+            <div class="home-item">
+                <div class="home-subtitle">
+                    Como funciona?
+                </div>
+                <div class="home-text">
+                    Uma ferramenta que permite um sorteio que possa ser validado! Isso significa que qualquer pessoa pode verificar se o resultado do sorteio foi realmente aleatório ou foi propositalmente alterado!
+                </div>
+            </div>
+            <div class="home-item">
+                <div class="home-subtitle">
+                    Quem pode utilizar o serviço?
+                </div>
+                <div class="home-text">
+                    Todos! Seja para uma aplicação mais séria ou para um sorteio em seu grupo de amigos, o Criptosorteio permite que qualquer pessoa crie e disponibilize sorteios para seus usuários.
+                </div>
+            </div>
+        </div>
+    </div>
 
     <footer class="footer">
         <p>
