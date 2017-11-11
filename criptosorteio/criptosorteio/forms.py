@@ -1,3 +1,4 @@
+from django.utils.translation import ugettext as _
 from django import forms
 from django.contrib.auth.models import User
 
@@ -36,13 +37,13 @@ class RegisterForm(forms.Form):
         email = self.cleaned_data.get('email')
         username = self.cleaned_data.get('username')
         if email and User.objects.filter(email=email).exclude(username=username).exists():
-            raise forms.ValidationError(u'Email ja utilizado.')
+            raise forms.ValidationError(_('Email ja utilizado.'))
         return email
 
-    def clean_password(self):
-        password = self.cleaned_data.get('password')
-        password_confirm = self.cleaned_data.get('password_confirm')
+    def clean(self):
+        cleaned_data = super(RegisterForm, self).clean()
+        password = cleaned_data.get("password")
+        password_confirm = cleaned_data.get("password_confirm")
 
-        if (password != password_confirm):
-            raise forms.ValidationError(u'Senha não confere')
-        return password
+        if password != password_confirm:
+            raise forms.ValidationError(_("As senhas não conferem"))
