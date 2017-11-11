@@ -61,7 +61,7 @@ class Comentario(models.Model):
 
     def display_nome(self):
         """
-            Retorna o nome do usuario do comentario
+        Retorna o nome do usuario do comentario
         """
 
         return self.comentador.username

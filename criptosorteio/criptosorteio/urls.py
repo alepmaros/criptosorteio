@@ -19,11 +19,12 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 
-from .views import IndexView
+from criptosorteio.views import register_view, IndexView
 
 urlpatterns = [
     url(r'^$', IndexView.as_view()),
+    url(r'^registrar$', register_view, name="registrar"),
     url(r'^sorteios/', include('sorteios.urls')),
-    url(r'^perfil/', include('django.contrib.auth.urls')),
+    url(r'^conta/', include('django.contrib.auth.urls')),
     url(r'^admin/', admin.site.urls),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

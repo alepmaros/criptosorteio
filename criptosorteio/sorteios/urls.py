@@ -1,7 +1,7 @@
 from django.conf.urls import url
 
-from . import views
+from sorteios.views import SorteiosView
 
 urlpatterns = [
-
+    url(r'^$', SorteiosView.as_view(), name='sorteios'),
 ]
