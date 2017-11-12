@@ -22,8 +22,7 @@ def register_view(request):
             last_name = form.cleaned_data['last_name']
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
-            password_confirm = form.cleaned_data['password_confirm']
-            
+
             new_user = User.objects.create_user(username, email, password)
             new_user.first_name = first_name
             new_user.last_name = last_name
