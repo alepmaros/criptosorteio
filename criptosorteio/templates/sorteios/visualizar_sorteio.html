@@ -1,0 +1,19 @@
+{% extends 'sorteios/base_sorteios.html' %}
+
+{% block content %}
+
+<h1>Visualizar Sorteio</h1>
+
+
+<div class="col-sm-8 mx-auto">
+        <h1>{{ sorteio.nome }}</h1>
+        <p>{{ sorteio.descricao }}</p>
+        <p>{{ sorteio.hora_criado }}</p>
+        <p>{{ sorteio.hora_sorteio }}</p>
+        <p>{{ sorteio.criador.username }}</p>
+        <p>{{ sorteio.participantes.count }}</p>
+        <p>{{ sorteio.privacidade }}</p>
+</div>
+
+
+{% endblock %}     

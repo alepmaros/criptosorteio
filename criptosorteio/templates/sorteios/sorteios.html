@@ -1,18 +1,49 @@
 {% extends 'sorteios/base_sorteios.html' %}
 
-
 {% block content %}
+
+{% if sorteio_list %}
+{% for sorteioinst in sorteio_list %} 
 <div class="col-sm-8 mx-auto">
-    <h1>Navbar examples</h1>
-    <p>This example is a quick exercise to illustrate how the navbar and its contents work. Some navbars extend the width of
-        the viewport, others are confined within a
-        <code>.container</code>. For positioning of navbars, checkout the
-        <a href="../navbar-top/">top</a> and
-        <a href="../navbar-top-fixed/">fixed top</a> examples.</p>
-    <p>At the smallest breakpoint, the collapse plugin is used to hide the links and show a menu button to toggle the collapsed
-        content.</p>
-    <p>
-        <a class="btn btn-primary" href="../../components/navbar/" role="button">View navbar docs &raquo;</a>
-    </p>
+        {% if sorteioinst.foto %}
+        <img src="{{ sorteioinst.foto.url }}">
+        {% else %}
+        <p>imagem padrao</p>
+        {% endif %}
+        <h1>{{ sorteioinst.nome }}</h1>
+        <p>{{ sorteioinst.descricao }}</p>
+        <p>{{ sorteioinst.hora_sorteio }}</p>
+        <p>{{ sorteioinst.criador.username }}</p>
+        <p>{{ sorteioinst.participantes.count }}</p>
+        <a href="{% url 'visualizar-sorteio' pk=sorteioinst.pk %}">Visualizar Sorteio</a>
 </div>
+{% endfor %}
+{% else %}
+<div class="col-sm-8 mx-auto">
+    <h1>Não há nenhum sorteio ativo no momento :(</h1>
+</div>
+{% endif %}  
+
+{% endblock %}     
+
+{% block pagination %}
+{% if is_paginated %}
+<div class="col-sm-8 mx-auto">
+    <div class="pagination">
+        <span class="page-links">
+            {% if page_obj.has_previous %}
+            <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+            <span class="page-current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+            {% if page_obj.has_next %}
+            <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
+            {% endif %}
+        </span>
+    </div>
+</div>
+{% endif %}
 {% endblock %}
+
+

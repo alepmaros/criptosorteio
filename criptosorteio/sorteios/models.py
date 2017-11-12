@@ -11,7 +11,7 @@ class Sorteio(models.Model):
 
     nome = models.CharField(max_length=128)
     descricao = models.TextField(max_length=4096)
-    # Adicionar campo para foto
+    foto = models.ImageField(blank=True, null=True, upload_to='sorteio/fotos/')
     
     hora_criado = models.DateTimeField(default=timezone.now, blank=False, null=False)
     hora_sorteio = models.DateTimeField(blank=False, null=False)

@@ -103,4 +103,4 @@ ENV/
 # Migrations
 criptosorteio/sorteios/migrations/*
 criptosorteio/db.sqlite3
-
+criptosorteio/media/sorteio/*
