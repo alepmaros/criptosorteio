@@ -3,19 +3,37 @@
 {% block content %}
 
 {% if sorteio_list %}
+{% load static %}
 {% for sorteioinst in sorteio_list %} 
-<div class="col-sm-8 mx-auto">
-        {% if sorteioinst.foto %}
-        <img src="{{ sorteioinst.foto.url }}">
-        {% else %}
-        <p>imagem padrao</p>
-        {% endif %}
-        <h1>{{ sorteioinst.nome }}</h1>
-        <p>{{ sorteioinst.descricao }}</p>
-        <p>{{ sorteioinst.hora_sorteio }}</p>
-        <p>{{ sorteioinst.criador.username }}</p>
-        <p>{{ sorteioinst.participantes.count }}</p>
-        <a href="{% url 'visualizar-sorteio' pk=sorteioinst.pk %}">Visualizar Sorteio</a>
+<div class="col-sm-8 mx-auto sorteio-item-box">
+    <div class="sorteio-users-counter">
+        Participantes: {{ sorteioinst.participantes.count }}
+    </div>
+    <h2>{{ sorteioinst.nome }}</h2>
+    <div class="sorteio-user-info">
+        <div class="sorteio-user-avatar">
+            <img src="{% static 'img/empty-user-image.png' %}">
+        </div>
+
+        <div class="sorteio-user-name-date">
+            <p>Criado por <b>{{ sorteioinst.criador.username }}</b> há {{ sorteioinst.hora_criado | timesince }}</p>
+            <p>{{ sorteioinst.hora_sorteio | timeuntil }} restantes</p>
+        </div>
+
+        <div class="sorteio-info">
+            {% if sorteioinst.foto %}
+            <img src="{{ sorteioinst.foto.url }}">
+            {% else %}
+            <img src="{% static 'img/empty-project-image.jpg' %}">
+            {% endif %}
+            <p>{{ sorteioinst.descricao|truncatechars:650 }}</p>
+        </div>
+    </div>
+    <a href="{% url 'visualizar-sorteio' pk=sorteioinst.pk %}">
+        <div class="sorteio-view btn">
+            Visualizar Sorteio
+        </div>
+    </a>
 </div>
 {% endfor %}
 {% else %}
