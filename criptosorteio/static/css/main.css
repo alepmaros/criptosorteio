@@ -68,11 +68,11 @@
   padding-top: 20px;
 }
 
-
-
-
-
-
+.pagination {
+  float: right;
+  padding-bottom: 30px;
+  font-size: 1.4em;
+}
 
 .sorteios-title {
   color: #0099ff;
