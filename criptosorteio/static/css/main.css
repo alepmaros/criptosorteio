@@ -74,6 +74,10 @@
 
 
 
+.sorteios-title {
+  color: #0099ff;
+  padding: 0px;
+}
 
 .sorteio-item-box {
   min-height: 450px;
@@ -123,8 +127,13 @@
   border-radius: .25em;
 }
 
+@media screen and (min-width: 992px) {
+  .sorteio-view {
+    position: absolute;
+  }
+}
+
 .sorteio-view {
-  position: absolute;
   bottom: 40px;
   right: 40px;
 }
