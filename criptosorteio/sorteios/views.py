@@ -16,7 +16,7 @@ class SorteiosListView(LoginRequiredMixin,ListView):
     login_url = reverse_lazy('login')
     template_name ='sorteios/sorteios.html'
     model = Sorteio
-    paginate_by = 10
+    paginate_by = 5
     
     def get_queryset(self):
         """
