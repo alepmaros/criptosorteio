@@ -1,10 +1,10 @@
 from django.views.generic import TemplateView, ListView, DetailView
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 
 from .models import Sorteio
 from .forms import SorteioForm
@@ -24,10 +24,17 @@ class SorteiosListView(LoginRequiredMixin,ListView):
         """
         return Sorteio.objects.filter(privacidade='pub').filter(hora_sorteio__gte=timezone.now())
 
-class VisualizarSorteioDetailView(LoginRequiredMixin, DetailView):
-    login_url = reverse_lazy('login')
-    template_name = 'sorteios/visualizar_sorteio.html'
-    model = Sorteio
+@login_required
+def visualizar_sorteio(request, pk):
+
+    sorteio = get_object_or_404(Sorteio, pk=pk)
+    owner = False
+
+    if (sorteio.criador.username == request.user.username):
+        owner = True
+    
+    return render(request, 'sorteios/visualizar_sorteio.html', {'sorteio': sorteio,
+                                                                'owner'  : owner})
 
 
 @login_required
@@ -47,6 +54,29 @@ def cadastrar_sorteio(request):
         form = SorteioForm()
 
     return render(request, 'sorteios/criar_sorteio.html', {'form': form})
+
+
+@login_required
+def entrar_sorteio(request, pk):
+    get_object_or_404(Sorteio, pk=pk)
+    sorteio = Sorteio.objects.get(pk=pk)
+    sorteio.participantes.add(request.user)
+    sorteio.save()
+
+    return HttpResponseRedirect(reverse_lazy('visualizar-sorteio',  kwargs={'pk':pk}))
+
+
+@login_required
+def visualizar_participantes(request, pk):
+    get_object_or_404(Sorteio, pk=pk)
+    sorteio = Sorteio.objects.get(pk=pk)
+    participantes = sorteio.participantes.all()
+
+    usuario_participantes = []
+    for p in participantes:
+        usuario_participantes.append(p.username)
+
+    return JsonResponse({'username':usuario_participantes})
 
 class DeletarSorteio(LoginRequiredMixin, TemplateView):
     login_url = reverse_lazy('login')

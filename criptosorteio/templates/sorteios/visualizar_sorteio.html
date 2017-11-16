@@ -13,6 +13,12 @@
         <p>{{ sorteio.criador.username }}</p>
         <p>{{ sorteio.participantes.count }}</p>
         <p>{{ sorteio.privacidade }}</p>
+        {% if owner %}
+        <a href="{% url 'deletar-sorteio' pk=sorteio.pk %}">Deletar Sorteio</a><br>
+        {% else %}
+        <a href="{% url 'entrar-sorteio' pk=sorteio.pk %}">Entrar Sorteio</a><br>
+        {% endif %}
+        <a href="{% url 'visualizar-participantes' pk=sorteio.pk %}">Visualizar Participantes</a>
 </div>
 
 
