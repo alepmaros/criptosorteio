@@ -8,8 +8,7 @@ django
 
 Instruções:
 
-- pip install django-material
-- pip install Pillow
+- pip3 install -r requirements.txt
 - python3 manage.py makemigrations
 - python3 manage.py migrate
-- python manage.py runserver
+- python3 manage.py runserver
