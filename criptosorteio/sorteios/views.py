@@ -28,14 +28,19 @@ class SorteiosListView(LoginRequiredMixin,ListView):
 def visualizar_sorteio(request, pk):
 
     sorteio = get_object_or_404(Sorteio, pk=pk)
+
     owner = False
+    joined = False
 
     if (sorteio.criador.username == request.user.username):
         owner = True
+
+    if (sorteio.participantes.filter(pk=request.user.pk).exists()):
+        joined = True
     
     return render(request, 'sorteios/visualizar_sorteio.html', {'sorteio': sorteio,
-                                                                'owner'  : owner})
-
+                                                                'owner'  : owner,
+                                                                'joined' : joined} )
 
 @login_required
 def cadastrar_sorteio(request):
@@ -62,6 +67,14 @@ def entrar_sorteio(request, pk):
     sorteio = Sorteio.objects.get(pk=pk)
     sorteio.participantes.add(request.user)
     sorteio.save()
+
+    return HttpResponseRedirect(reverse_lazy('visualizar-sorteio',  kwargs={'pk':pk}))
+
+@login_required
+def sair_sorteio(request, pk):
+    get_object_or_404(Sorteio, pk=pk)
+    sorteio = Sorteio.objects.get(pk=pk)
+    p = sorteio.participantes.remove(request.user)
 
     return HttpResponseRedirect(reverse_lazy('visualizar-sorteio',  kwargs={'pk':pk}))
 

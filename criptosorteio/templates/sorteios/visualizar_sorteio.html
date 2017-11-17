@@ -6,20 +6,41 @@
 
 
 <div class="col-sm-8 mx-auto">
-        <h1>{{ sorteio.nome }}</h1>
-        <p>{{ sorteio.descricao }}</p>
-        <p>{{ sorteio.hora_criado }}</p>
-        <p>{{ sorteio.hora_sorteio }}</p>
-        <p>{{ sorteio.criador.username }}</p>
-        <p>{{ sorteio.participantes.count }}</p>
-        <p>{{ sorteio.privacidade }}</p>
-        {% if owner %}
-        <a href="{% url 'deletar-sorteio' pk=sorteio.pk %}">Deletar Sorteio</a><br>
-        {% else %}
-        <a href="{% url 'entrar-sorteio' pk=sorteio.pk %}">Entrar Sorteio</a><br>
-        {% endif %}
-        <a href="{% url 'visualizar-participantes' pk=sorteio.pk %}">Visualizar Participantes</a>
+    <h1>{{ sorteio.nome }}</h1>
+    <p>{{ sorteio.descricao }}</p>
+    <p>{{ sorteio.hora_criado }}</p>
+    <p>{{ sorteio.hora_sorteio }}</p>
+    <p>{{ sorteio.criador.username }}</p>
+    <p>{{ sorteio.participantes.count }}</p>
+    <p>{{ sorteio.privacidade }}</p>
+    {% if not joined %}
+    <a href="{% url 'entrar-sorteio' pk=sorteio.pk %}">Entrar Sorteio</a><br>
+    {% else %}
+    <a href="{% url 'sair-sorteio' pk=sorteio.pk %}">Sair Sorteio</a><br>
+    {% endif %}
+    {% if owner %}
+    <a href="{% url 'deletar-sorteio' pk=sorteio.pk %}">Deletar Sorteio</a><br>
+    {% endif %}
+    <a href="{% url 'visualizar-participantes' pk=sorteio.pk %}">Visualizar Participantes</a>
+
+    <div id="disqus_thread"></div>
+        <script>
+            var disqus_config = function () {
+            this.page.url = "http://localhost:8000";
+            this.page.identifier = "/sorteios/{{ sorteio.pk }}/";
+            };
+            
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://criptosorteio.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
+
+{% block extrajs %} <script id="dsq-count-scr" src="//criptosorteio.disqus.com/count.js" async></script> {% endblock %}
 
 
 {% endblock %}     
