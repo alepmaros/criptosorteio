@@ -6,15 +6,14 @@
 
 {% block content %}
 
-<h1>Criar novo sorteio</h1>
+<h1>{% block title %}Criar novo sorteio{% endblock %}</h1>
 
 {% load material_form %}
-<form action="{% url 'novo-sorteio' %}" enctype="multipart/form-data" method="post">
+<form action="{% block action %}{% url 'novo-sorteio' %}{% endblock %}" enctype="multipart/form-data" method="post">
     {% csrf_token %}
     {% form form=form %}{% endform %}
-    <input type="submit" name="_submit" class="btn" value="Criar novo sorteio" />
+    <input type="submit" name="_submit" class="btn" value="{% block button %}Criar novo sorteio{% endblock %}" />
 </form>
-
 
 {% endblock %} 
 

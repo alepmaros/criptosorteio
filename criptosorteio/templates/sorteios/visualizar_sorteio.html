@@ -19,6 +19,7 @@
         <a href="{% url 'sair-sorteio' pk=sorteio.pk %}">Sair Sorteio</a><br>
         {% endif %}
         {% if owner %}
+        <a href="{% url 'editar-sorteio' pk=sorteio.pk %}">Editar Sorteio</a><br>
         <a href="{% url 'deletar-sorteio' pk=sorteio.pk %}">Deletar Sorteio</a><br>
         {% endif %}
     {% else %}

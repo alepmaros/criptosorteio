@@ -60,11 +60,24 @@ def cadastrar_sorteio(request):
 
     return render(request, 'sorteios/criar_sorteio.html', {'form': form})
 
+@login_required
+def editar_sorteio(request, pk):
+    sorteio = get_object_or_404(Sorteio, pk=pk)
+
+    if not sorteio.criador.username == request.user.username:
+        return HttpResponseRedirect(reverse_lazy('visualizar-sorteio', kwargs={'pk':pk}))
+    
+    form = SorteioForm(request.POST or None, request.FILES or None, instance=sorteio)
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        return HttpResponseRedirect(reverse_lazy('visualizar-sorteio', kwargs={'pk':pk}))
+
+    return render(request, 'sorteios/editar_sorteio.html', {'form': form, 'pk': pk})
+
 
 @login_required
 def entrar_sorteio(request, pk):
-    get_object_or_404(Sorteio, pk=pk)
-    sorteio = Sorteio.objects.get(pk=pk)
+    sorteio = get_object_or_404(Sorteio, pk=pk)
     sorteio.participantes.add(request.user)
     sorteio.save()
 
@@ -72,8 +85,7 @@ def entrar_sorteio(request, pk):
 
 @login_required
 def sair_sorteio(request, pk):
-    get_object_or_404(Sorteio, pk=pk)
-    sorteio = Sorteio.objects.get(pk=pk)
+    sorteio = get_object_or_404(Sorteio, pk=pk)
     p = sorteio.participantes.remove(request.user)
 
     return HttpResponseRedirect(reverse_lazy('visualizar-sorteio',  kwargs={'pk':pk}))
