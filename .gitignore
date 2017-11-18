@@ -104,3 +104,4 @@ ENV/
 criptosorteio/sorteios/migrations/*
 criptosorteio/db.sqlite3
 criptosorteio/media/sorteio/*
+logs.txt

@@ -1,12 +1,10 @@
 from django_cron import CronJobBase, Schedule
 from django.utils import timezone
 
-from .models import Sorteio
-
-from datetime import datetime
 from utils.rbeacon import RBeacon
-
 import hashlib
+
+from .models import Sorteio
 
 class SortearVencedoresCronJob(CronJobBase):
     RUN_EVERY_MINS = 0
@@ -35,9 +33,10 @@ class SortearVencedoresCronJob(CronJobBase):
 
                     participants = sorted(participants, key=lambda participants: participants[1])
 
-                    s.id_ganhador = participants[0][0]
+                    s.ganhador = participants[0][0]
 
                 s.string_nist = value['output_value']
+                s.sorteado = True
                 s.save()
 
             else:

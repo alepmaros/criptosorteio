@@ -18,8 +18,10 @@ class Sorteio(models.Model):
     string_nist = models.CharField(max_length=128, blank=True, null=True)
 
     criador = models.ForeignKey(User, blank=False, null=False, related_name='criador')
-    id_ganhador = models.ForeignKey(User, null=True, blank=True, related_name='id_ganhador')
+    ganhador = models.ForeignKey(User, null=True, blank=True, related_name='ganhador')
     participantes = models.ManyToManyField(User, blank=True, related_name='participantes')
+
+    sorteado = models.BooleanField(default=False)
 
     PRIVACIDADE_TIPOS = (
         ('nli', 'Não Listado'),
@@ -30,7 +32,7 @@ class Sorteio(models.Model):
 
     @property
     def precisa_sortear(self):
-        if self.id_ganhador and timezone.now() > self.hora_sorteio:
+        if self.ganhador and timezone.now() > self.hora_sorteio:
             return True
         return False
 

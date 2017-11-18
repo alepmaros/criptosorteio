@@ -6,7 +6,7 @@ from sorteios.models import Sorteio, Comentario
 
 @admin.register(Sorteio)
 class SorteioAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'hora_sorteio', 'privacidade')
+    list_display = ('nome', 'hora_sorteio', 'privacidade', 'sorteado')
 
 @admin.register(Comentario)
 class SorteioAdmin(admin.ModelAdmin):
