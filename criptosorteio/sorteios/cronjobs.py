@@ -20,10 +20,10 @@ class SortearVencedoresCronJob(CronJobBase):
         for s in sorteios:
             value = rbeacon.get_output_value( s.hora_sorteio.timestamp() )
 
-            # If the NIST string is already availabe, draw the winner,
-            # otherwise wait for the next execution
+            # Se a string do NIST esta disponivel, selecione um ganhador
+            # se nao espere a proxima execucao
             if value['valid']:
-                # If there is participants, choose one winner, otherwise just fill the nist string
+                # Se tem participantes, selecione um ganhador, se não só diga que foi sorteado
                 if s.participantes.all().count() > 0:
                     participants = []
                     for p in s.participantes.all():

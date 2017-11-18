@@ -32,7 +32,7 @@ class Sorteio(models.Model):
 
     @property
     def precisa_sortear(self):
-        if self.ganhador and timezone.now() > self.hora_sorteio:
+        if not self.sorteado and timezone.now() > self.hora_sorteio:
             return True
         return False
 

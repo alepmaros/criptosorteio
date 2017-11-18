@@ -1,10 +1,6 @@
 # criptosorteio
+
 Um site em Django para realizar sorteios auditáveis
-
-
-Requerimentos:
-
-django
 
 # Instruções:
 

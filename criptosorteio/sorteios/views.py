@@ -32,15 +32,15 @@ def visualizar_sorteio(request, pk):
     owner = False
     joined = False
 
-    if (sorteio.criador.username == request.user.username):
+    if sorteio.criador.username == request.user.username:
         owner = True
 
-    if (sorteio.participantes.filter(pk=request.user.pk).exists()):
+    if sorteio.participantes.filter(pk=request.user.pk).exists():
         joined = True
-    
+
     return render(request, 'sorteios/visualizar_sorteio.html', {'sorteio': sorteio,
                                                                 'owner'  : owner,
-                                                                'joined' : joined} )
+                                                                'joined' : joined})
 
 @login_required
 def cadastrar_sorteio(request):
@@ -53,7 +53,7 @@ def cadastrar_sorteio(request):
             novo_sorteio.save()
             form.save_m2m()
 
-            return HttpResponseRedirect(reverse_lazy('sorteios'))
+            return HttpResponseRedirect(reverse_lazy('visualizar-sorteio', kwargs={'pk':novo_sorteio.pk}))
 
     else:
         form = SorteioForm()
@@ -78,21 +78,27 @@ def sair_sorteio(request, pk):
 
     return HttpResponseRedirect(reverse_lazy('visualizar-sorteio',  kwargs={'pk':pk}))
 
+@login_required
+def deletar_sorteio(request, pk):
+    sorteio = get_object_or_404(Sorteio, pk=pk)
+
+    if sorteio.criador.username == request.user.username:
+        sorteio.delete()
+        return HttpResponseRedirect(reverse_lazy('sorteios'))
+    else:
+        return HttpResponseRedirect(reverse_lazy('visualizar-sorteio', kwargs={'pk': pk})) 
 
 @login_required
 def visualizar_participantes(request, pk):
-    get_object_or_404(Sorteio, pk=pk)
-    sorteio = Sorteio.objects.get(pk=pk)
+    sorteio = get_object_or_404(Sorteio, pk=pk)
     participantes = sorteio.participantes.all()
 
     usuario_participantes = []
     for p in participantes:
         usuario_participantes.append(p.username)
 
-    return JsonResponse({'username':usuario_participantes})
-
-class DeletarSorteio(LoginRequiredMixin, TemplateView):
-    login_url = reverse_lazy('login')
+    return JsonResponse({'username':usuario_participantes,
+                         'output_value':sorteio.string_nist})
 
 class SorteiosCriados(LoginRequiredMixin, TemplateView):
     login_url = reverse_lazy('login')
