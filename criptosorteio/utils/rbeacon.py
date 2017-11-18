@@ -1,15 +1,15 @@
- 
 from datetime import datetime
 from xml.dom import minidom
-import pytz
 import urllib.request
+import pytz
+
 
 class RBeacon:
     def __init__(self):
-        self.tz = pytz.timezone("America/Sao_Paulo")
+        self.time_zone = pytz.timezone("America/Sao_Paulo")
         self.url_str = 'https://beacon.nist.gov/rest/record/'
 
-    def getOutputValue(self, timestamp):
+    def get_output_value(self, timestamp):
         """
         Function to get the output value from NIST Randomness Beacon with a specific timestamp
         """
@@ -31,5 +31,8 @@ class RBeacon:
         
         return response
 
-    def getOutputValueNow(self):
-        return self.getOutputValue(datetime.now(tz=self.tz).timestamp())
+    def get_output_value_now(self):
+        """
+        Get the outputValue from current timestamp. Usually results in 404 errors.
+        """
+        return self.get_output_value(datetime.now(tz=self.time_zone).timestamp())
