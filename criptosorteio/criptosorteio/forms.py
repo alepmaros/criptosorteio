@@ -15,10 +15,10 @@ class RegisterForm(forms.Form):
     username = forms.CharField(min_length=4, max_length=150, required=True, label="Usuario",
         widget=forms.TextInput(attrs={'placeholder': 'Seu usuario...'}))
 
-    password = forms.CharField(
+    password = forms.CharField(required=True,
         widget=forms.PasswordInput(attrs={'placeholder': 'Sua senha...'}))
 
-    password_confirm = forms.CharField(
+    password_confirm = forms.CharField(required=True,
         widget=forms.PasswordInput(attrs={'placeholder': 'Confirme sua senha...'}))
 
     email = forms.EmailField(required=True, label="Email")
@@ -46,4 +46,36 @@ class RegisterForm(forms.Form):
         password_confirm = cleaned_data.get("password_confirm")
 
         if password != password_confirm:
+            raise forms.ValidationError(_("As senhas não conferem"))
+
+class UpdateUserForm(forms.Form):
+    first_name = forms.CharField(max_length=128, required=True, label="Nome", 
+        widget=forms.TextInput(attrs={'placeholder': 'Seu nome...'}))
+
+    last_name = forms.CharField(max_length=128, required=True, label="Sobrenome",
+        widget=forms.TextInput(attrs={'placeholder': 'Seu sobrenome...'}))
+
+    email = forms.EmailField(required=True, label="Email")        
+
+    current_password = forms.CharField(required=True, label="Senha Atual",
+        widget=forms.PasswordInput(attrs={'placeholder': 'Sua senha...'}))
+
+    layout = Layout(Row('first_name', 'last_name'), 'email', 'current_password')
+
+class UpdatePasswordForm(forms.Form):
+    current_password = forms.CharField(required=True, label="Senha Atual",
+        widget=forms.PasswordInput(attrs={'placeholder': 'Sua senha...'}))
+
+    new_password = forms.CharField(required=True,
+        widget=forms.PasswordInput(attrs={'placeholder': 'Sua nova senha...'}))
+
+    password_confirm = forms.CharField(required=True,
+        widget=forms.PasswordInput(attrs={'placeholder': 'Confirme sua senha...'}))
+
+    def clean(self):
+        cleaned_data = super(UpdatePasswordForm, self).clean()
+        new_password = cleaned_data.get("new_password")
+        password_confirm = cleaned_data.get("password_confirm")
+
+        if new_password != password_confirm:
             raise forms.ValidationError(_("As senhas não conferem"))

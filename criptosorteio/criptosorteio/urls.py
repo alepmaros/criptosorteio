@@ -19,12 +19,13 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 
-from criptosorteio.views import register_view, IndexView
+from criptosorteio.views import register_view, preferencias_view, IndexView
 
 urlpatterns = [
     url(r'^$', IndexView.as_view()),
     url(r'^sorteios/', include('sorteios.urls')),
     url(r'^conta/registrar$', register_view, name='register'),
+    url(r'^conta/preferencias$', preferencias_view, name='preferencias'),
     url(r'^conta/', include('django.contrib.auth.urls')),
     url(r'^admin/', admin.site.urls),
 ]

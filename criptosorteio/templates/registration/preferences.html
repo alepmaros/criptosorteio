@@ -1,0 +1,35 @@
+{% extends 'sorteios/base_sorteios.html' %}
+
+{% block extracss %}
+{% include 'material/includes/material_css.html' %}
+{% endblock%}
+
+{% block content %}
+
+
+
+{% load material_form %}
+<div class="col-sm-8 mx-auto">
+    <h3>Preferencias do Usuario</h3>
+    <form action="{% url 'preferencias' %}" method="post">
+        {% csrf_token %}
+        {% form form=form_general_pref %}{% endform %}
+        <input type="submit" name="_submit_update_user" class="btn" value="Salvar Alterações" />
+    </form>
+</div>
+
+<div class="col-sm-8 mx-auto">
+        <h3>Alterar senha</h3>
+        <form action="{% url 'preferencias' %}" method="post">
+            {% csrf_token %}
+            {% form form=form_change_pw %}{% endform %}
+            <input type="submit" name="_submit_change_pw" class="btn" value="Alterar senha" />
+        </form>
+    </div>
+{% endblock %} 
+
+{% block extrajs %}
+{% load static %}
+<script src="{% static 'material/js/jquery.js' %}"></script>
+{% include 'material/includes/material_js.html' %}
+{% endblock %}
