@@ -5,7 +5,7 @@
 {% if sorteio_list %}
 {% load static %}
 <div class="col-sm-8 mx-auto sorteios-title">
-    <h1>Sorteios Públicos Recentes</h1>
+    <h1>{% block page-title %} Sorteios Públicos Recentes{% endblock %}</h1>
 </div>
 {% for sorteioinst in sorteio_list %} 
 <div class="col-sm-8 mx-auto sorteio-item-box">

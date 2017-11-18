@@ -24,6 +24,18 @@ class SorteiosListView(LoginRequiredMixin,ListView):
         """
         return Sorteio.objects.filter(privacidade='pub').filter(hora_sorteio__gte=timezone.now())
 
+class SorteiosCriados(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy('login')
+    template_name ='sorteios/meus_sorteios.html'
+    model = Sorteio
+    paginate_by = 5
+    
+    def get_queryset(self):
+        """
+        Apenas sorteios do usuario
+        """
+        return Sorteio.objects.filter(criador=self.request.user).order_by('-hora_criado')
+
 @login_required
 def visualizar_sorteio(request, pk):
 
@@ -111,9 +123,6 @@ def visualizar_participantes(request, pk):
 
     return JsonResponse({'username':usuario_participantes,
                          'output_value':sorteio.string_nist})
-
-class SorteiosCriados(LoginRequiredMixin, TemplateView):
-    login_url = reverse_lazy('login')
 
 class SorteiosParticipando(LoginRequiredMixin, TemplateView):
     login_url = reverse_lazy('login')
