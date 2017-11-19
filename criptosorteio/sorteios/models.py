@@ -19,7 +19,7 @@ class Sorteio(models.Model):
 
     criador = models.ForeignKey(User, blank=False, null=False, related_name='criador')
     ganhador = models.ForeignKey(User, null=True, blank=True, related_name='ganhador')
-    participantes = models.ManyToManyField(User, blank=True, related_name='participantes')
+    participantes = models.ManyToManyField(User, blank=True, through='Participacao', related_name='participantes')
 
     sorteado = models.BooleanField(default=False)
 
@@ -44,6 +44,11 @@ class Sorteio(models.Model):
 
     class Meta:
         ordering = ["hora_sorteio"]
+
+class Participacao(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    sorteio = models.ForeignKey(Sorteio, on_delete=models.CASCADE)
+    date_joined = models.DateTimeField(default=timezone.now, blank=False, null=False)
 
 class Comentario(models.Model):
     """

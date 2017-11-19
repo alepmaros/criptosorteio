@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib import messages
 
-from .models import Sorteio
+from .models import Sorteio, Participacao
 from .forms import SorteioForm
 
 class SorteiosListView(LoginRequiredMixin,ListView):
@@ -36,6 +36,18 @@ class SorteiosCriados(LoginRequiredMixin, ListView):
         Apenas sorteios do usuario
         """
         return Sorteio.objects.filter(criador=self.request.user).order_by('-hora_criado')
+
+class SorteiosParticipando(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy('login')
+    template_name ='sorteios/sorteios_participando.html'
+    model = Sorteio
+    paginate_by = 5
+    
+    def get_queryset(self):
+        """
+        Apenas sorteios do usuario
+        """
+        return Sorteio.objects.filter(participantes=self.request.user).order_by('-participacao__date_joined')
 
 @login_required
 def visualizar_sorteio(request, pk):
@@ -93,9 +105,9 @@ def editar_sorteio(request, pk):
 def entrar_sorteio(request, pk):
     sorteio = get_object_or_404(Sorteio, pk=pk)
 
-    if not sorteio.precisa_sortear:    
-        sorteio.participantes.add(request.user)
-        sorteio.save()
+    if not sorteio.precisa_sortear:
+        p = Participacao(user=request.user, sorteio=sorteio)
+        p.save()
         messages.add_message(request, messages.SUCCESS, 'Agora você está participando do sorteio!')
     else:
         messages.add_message(request, messages.ERROR, 'Infelizmente o sorteio ja acabou :(')
@@ -105,7 +117,8 @@ def entrar_sorteio(request, pk):
 @login_required
 def sair_sorteio(request, pk):
     sorteio = get_object_or_404(Sorteio, pk=pk)
-    p = sorteio.participantes.remove(request.user)
+    p = Participacao.objects.get(user=request.user, sorteio=sorteio)
+    p.delete()
 
     messages.add_message(request, messages.SUCCESS, 'Você saiu do sorteio.')
     return HttpResponseRedirect(reverse_lazy('visualizar-sorteio',  kwargs={'pk':pk}))
@@ -133,6 +146,3 @@ def visualizar_participantes(request, pk):
 
     return JsonResponse({'username':usuario_participantes,
                          'output_value':sorteio.string_nist})
-
-class SorteiosParticipando(LoginRequiredMixin, TemplateView):
-    login_url = reverse_lazy('login')
