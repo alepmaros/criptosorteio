@@ -1,13 +1,23 @@
+import shortuuid
+
 from django.db import models
 
 from django.contrib.auth.models import User
 from django.utils import timezone
+
+def gen_shortuuid():
+    uuid = shortuuid.uuid()
+    while Sorteio.objects.filter(id=uuid).exists():
+        uuid = shortuuid.uuid()
+    
+    return uuid
 
 # Create your models here.
 class Sorteio(models.Model):
     """
     Modelo de um sorteio especifico.
     """
+    id = models.CharField(max_length=22, default=gen_shortuuid, primary_key=True)
 
     nome = models.CharField(max_length=128)
     descricao = models.TextField(max_length=4096)
