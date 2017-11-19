@@ -5,6 +5,16 @@
 <h1>Visualizar Sorteio</h1>
 
 <div class="col-sm-8 mx-auto">
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+            {{ message }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
     <h1>{{ sorteio.nome }}</h1>
     <p>{{ sorteio.descricao }}</p>
     <p>Criado em: {{ sorteio.hora_criado }}</p>

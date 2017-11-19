@@ -2,10 +2,22 @@
 
 {% block content %}
 
+{% if messages %}
+<div class="col-sm-8 mx-auto">
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+            {{ message }}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
 {% if sorteio_list %}
 {% load static %}
 <div class="col-sm-8 mx-auto sorteios-title">
-    <h1>{% block page-title %} Sorteios Públicos Recentes{% endblock %}</h1>
+    <h1>{% block page-title %}Sorteios Públicos Recentes{% endblock %}</h1>
 </div>
 {% for sorteioinst in sorteio_list %} 
 <div class="col-sm-8 mx-auto sorteio-item-box">

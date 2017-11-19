@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, JsonResponse
+from django.contrib import messages
 
 from .models import Sorteio
 from .forms import SorteioForm
@@ -77,6 +78,7 @@ def editar_sorteio(request, pk):
     sorteio = get_object_or_404(Sorteio, pk=pk)
 
     if not sorteio.criador.username == request.user.username:
+        messages.add_message(request, messages.ERROR, 'Você não pode editar esse sorteio.')
         return HttpResponseRedirect(reverse_lazy('visualizar-sorteio', kwargs={'pk':pk}))
     
     form = SorteioForm(request.POST or None, request.FILES or None, instance=sorteio)
@@ -90,8 +92,13 @@ def editar_sorteio(request, pk):
 @login_required
 def entrar_sorteio(request, pk):
     sorteio = get_object_or_404(Sorteio, pk=pk)
-    sorteio.participantes.add(request.user)
-    sorteio.save()
+
+    if not sorteio.precisa_sortear:    
+        sorteio.participantes.add(request.user)
+        sorteio.save()
+        messages.add_message(request, messages.SUCCESS, 'Agora você está participando do sorteio!')
+    else:
+        messages.add_message(request, messages.ERROR, 'Infelizmente o sorteio ja acabou :(')
 
     return HttpResponseRedirect(reverse_lazy('visualizar-sorteio',  kwargs={'pk':pk}))
 
@@ -100,6 +107,7 @@ def sair_sorteio(request, pk):
     sorteio = get_object_or_404(Sorteio, pk=pk)
     p = sorteio.participantes.remove(request.user)
 
+    messages.add_message(request, messages.SUCCESS, 'Você saiu do sorteio.')
     return HttpResponseRedirect(reverse_lazy('visualizar-sorteio',  kwargs={'pk':pk}))
 
 @login_required
@@ -107,9 +115,11 @@ def deletar_sorteio(request, pk):
     sorteio = get_object_or_404(Sorteio, pk=pk)
 
     if sorteio.criador.username == request.user.username:
+        messages.add_message(request, messages.SUCCESS, 'Você deletou o sorteio: ' + sorteio.nome)
         sorteio.delete()
         return HttpResponseRedirect(reverse_lazy('sorteios'))
     else:
+        messages.add_message(request, messages.ERROR, 'Você não pode deletar esse sorteio')
         return HttpResponseRedirect(reverse_lazy('visualizar-sorteio', kwargs={'pk': pk})) 
 
 @login_required
