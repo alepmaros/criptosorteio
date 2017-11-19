@@ -4,6 +4,8 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.models import User
 
 from .forms import RegisterForm, UpdateUserForm, UpdatePasswordForm
@@ -45,6 +47,8 @@ def preferencias_view(request):
                                                 'email'     : request.user.email})
     form_change_pw = UpdatePasswordForm()
 
+    err_update = err_change_pw = None
+
     if request.method == 'POST':
         if '_submit_update_user' in request.POST:
             form_general_pref = UpdateUserForm(request.POST)
@@ -55,14 +59,23 @@ def preferencias_view(request):
                 email = form_general_pref.cleaned_data['email']
                 current_password = form_general_pref.cleaned_data['current_password']
 
-                user = User.objects.get(username=request.user.username)
-                if (user.check_password(current_password)):
-                    user.first_name = first_name
-                    user.last_name = last_name
-                    user.email = email
-                    user.save()
+                # If the email is not being altered or if the email does not belong to another user
+                if (not User.objects.filter(email=email).exclude(username=request.user.username).exists()):
+                    user = User.objects.get(username=request.user.username)
+                    if (user.check_password(current_password)):
+                        user.first_name = first_name
+                        user.last_name = last_name
+                        user.email = email
+                        user.save()
+                        messages.add_message(request, messages.SUCCESS, 
+                            'Cadastro atualizado.', extra_tags='user_update')
+                        return HttpResponseRedirect('')
+                    else:
+                        messages.add_message(request, messages.ERROR,
+                            'Senha incorreta', extra_tags='user_update')
                 else:
-                    print("ERROR")
+                    messages.add_message(request, messages.ERROR,
+                        'E-mail ja utilizado', extra_tags='user_update')
 
         elif '_submit_change_pw' in request.POST:
             form_change_pw = UpdatePasswordForm(request.POST)
@@ -75,9 +88,13 @@ def preferencias_view(request):
                 if (user.check_password(current_password)):
                     user.set_password(new_password)
                     user.save()
-                    form_change_pw = UpdatePasswordForm()
+                    update_session_auth_hash(request, user)
+                    messages.add_message(request, messages.SUCCESS, 
+                            'Senha atualizada.', extra_tags='change_pw')
+                    return HttpResponseRedirect('')
                 else:
-                    print("ERROR")
+                    messages.add_message(request, messages.ERROR,
+                        'Senha atual incorreta', extra_tags='change_pw')
 
     return render(request, 'registration/preferences.html', {'form_general_pref': form_general_pref,
                                                              'form_change_pw'   : form_change_pw})

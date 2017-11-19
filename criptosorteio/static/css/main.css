@@ -164,3 +164,17 @@
   background-image: linear-gradient(to bottom, #3cb0fd, #0099ff);
   text-decoration: none;
 }
+
+li.success {
+  font-size: 1.2em;
+  color:green;
+}
+
+li.error {
+  font-size: 1.2em;
+  color:#F44336;
+}
+
+form .error {
+  font-size:1.2em;
+}
