@@ -32,7 +32,11 @@
 
         <div class="sorteio-user-name-date">
             <p>Criado por <b>{{ sorteioinst.criador.username }}</b> há {{ sorteioinst.hora_criado | timesince }}</p>
+            {% if sorteioinst.precisa_sortear or sorteioinst.sorteado %}
+            <p style="color: red">Sorteio acabou há {{ sorteioinst.hora_sorteio | timesince }}</p>
+            {% else %}
             <p>{{ sorteioinst.hora_sorteio | timeuntil }} restantes</p>
+            {% endif %}
         </div>
 
         <div class="sorteio-info">

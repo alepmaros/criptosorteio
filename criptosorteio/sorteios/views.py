@@ -6,6 +6,7 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib import messages
+from django.db.models import Prefetch
 
 from .models import Sorteio, Participacao
 from .forms import SorteioForm
@@ -29,7 +30,7 @@ class SorteiosCriados(LoginRequiredMixin, ListView):
     login_url = reverse_lazy('login')
     template_name ='sorteios/meus_sorteios.html'
     model = Sorteio
-    paginate_by = 5
+    paginate_by = 20
     
     def get_queryset(self):
         """
@@ -40,14 +41,14 @@ class SorteiosCriados(LoginRequiredMixin, ListView):
 class SorteiosParticipando(LoginRequiredMixin, ListView):
     login_url = reverse_lazy('login')
     template_name ='sorteios/sorteios_participando.html'
-    model = Sorteio
+    model = Participacao
     paginate_by = 5
     
     def get_queryset(self):
         """
         Apenas sorteios do usuario
         """
-        return Sorteio.objects.filter(participantes=self.request.user).order_by('-participacao__date_joined')
+        return Participacao.objects.select_related('sorteio').filter(user=self.request.user).order_by('-date_joined')
 
 @login_required
 def visualizar_sorteio(request, pk):
