@@ -18,5 +18,5 @@ class SorteioForm(forms.ModelForm):
     def clean_hora_sorteio(self):
         hora_sorteio = self.cleaned_data.get('hora_sorteio')
         if hora_sorteio < timezone.now():
-            raise forms.ValidationError(_('Sorteio não pode ser no passado'))
+            raise forms.ValidationError(_('Sorteio não pode ocorrer no passado'))
         return hora_sorteio

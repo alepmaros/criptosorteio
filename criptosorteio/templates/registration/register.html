@@ -21,3 +21,8 @@
     <input type="submit" name="_submit" class="btn" value="Registrar" />
 </form>
 {% endblock %}
+
+{% block extra-option %}
+<p style="text-align:right">Ja possui cadastro? <a href="{% url 'login' %}">Entre no sistema!</a></p>
+
+{% endblock %}

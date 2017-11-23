@@ -12,6 +12,7 @@
     {% block head %}
     
     {% include 'material/includes/material_css.html' %}
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
 
     <style type="text/css">
         html,
@@ -39,16 +40,18 @@
             <div class="{% block formclass %}col s12 m8 offset-m2 l8 offset-l2{% endblock %}">
 
                 <div class="card">
-                    <div style="color:blue; background-color:red;">
-                        <h4>Criptosorteio - {% block titulo_form %}{% endblock %}</h4>
+                    <div class="registration-card">
+                        <h4 class="registration-text">{% block titulo_form %}{% endblock %}</h4>
                     </div>
                     {% block content %}{% endblock %}
                 </div>
+                {% block extra-option %}{% endblock %}
+                <a href="{% url 'index' %}" style="text-align:right;float:right;">Voltar para a página inicial do Criptosorteio</a>
             </div>
         </div>
-
         {% block result %} {% endblock %}
     </div>
+
     {% block js %}
     <script src="{% static 'material/js/jquery.js' %}"></script>
     {% include 'material/includes/material_js.html' %}

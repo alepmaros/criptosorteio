@@ -22,7 +22,7 @@ from django.conf import settings
 from criptosorteio.views import register_view, preferencias_view, IndexView
 
 urlpatterns = [
-    url(r'^$', IndexView.as_view()),
+    url(r'^$', IndexView.as_view(), name='index'),
     url(r'^sorteios/', include('sorteios.urls')),
     url(r'^conta/registrar$', register_view, name='register'),
     url(r'^conta/preferencias$', preferencias_view, name='preferencias'),

@@ -1,6 +1,11 @@
 
 {% block content %}
-<p>Logged out!</p>  
 
-<a href="{% url 'login'%}">Click here to login again.</a>
+<div class="col-sm-8 mx-auto">
+        <p style="text-align:center;">Até a proxima!<br>
+            <a style="text-align:center;float:center;" href="{% url 'index'%}">Clique <a href="{% url 'index' %}">aqui</a> para retornar para a página inicial.</a>
+        </p>  
+        
+</div>
+
 {% endblock %}

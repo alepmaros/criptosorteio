@@ -30,24 +30,24 @@
 </div>
 
 <div class="col-sm-8 mx-auto">
-        <h3>Alterar senha</h3>
-        {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-            {% if 'change_pw' in message.tags %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
-                {{ message }}
-            </li>
-            {% endif %}
-            {% endfor %}
-        </ul>
+    <h3>Alterar senha</h3>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        {% if 'change_pw' in message.tags %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+            {{ message }}
+        </li>
         {% endif %}
-        <form action="{% url 'preferencias' %}" method="post">
-            {% csrf_token %}
-            {% form form=form_change_pw %}{% endform %}
-            <input type="submit" name="_submit_change_pw" class="btn" value="Alterar senha" />
-        </form>
-    </div>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <form action="{% url 'preferencias' %}" method="post">
+        {% csrf_token %}
+        {% form form=form_change_pw %}{% endform %}
+        <input type="submit" name="_submit_change_pw" class="btn" value="Alterar senha" />
+    </form>
+</div>
 {% endblock %} 
 
 {% block extrajs %}

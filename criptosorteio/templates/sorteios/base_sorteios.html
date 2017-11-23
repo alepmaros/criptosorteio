@@ -1,4 +1,5 @@
-<!doctype html> {% load static %}
+<!doctype html>
+{% load static %}
 <html lang="en">
 
 <head>
@@ -34,7 +35,7 @@
                         aria-expanded="false">Sorteios</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown04">
                         <a class="dropdown-item" href="{% url 'novo-sorteio' %}">Criar novo sorteio</a>
-                        <a class="dropdown-item" href="{% url 'sorteios-criados' %}">Sorteios criados</a>
+                        <a class="dropdown-item" href="{% url 'sorteios-criados' %}">Sorteios que criei</a>
                         <a class="dropdown-item" href="{% url 'sorteios-participando' %}">Sorteios que estou participando</a>
                     </div>
                 </li>

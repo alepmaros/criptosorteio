@@ -20,11 +20,12 @@ class RegisterForm(forms.Form):
         widget=forms.PasswordInput(attrs={'placeholder': 'Sua senha...',
                                           'render_value': False}))
 
-    password_confirm = forms.CharField(required=True,
+    password_confirm = forms.CharField(required=True, label="Confirmar senha",
         widget=forms.PasswordInput(attrs={'placeholder': 'Confirme sua senha...',
                                           'render_value': False}))
 
-    email = forms.EmailField(required=True, label="Email")
+    email = forms.EmailField(required=True, label="Email",
+        widget=forms.EmailInput(attrs={'placeholder': 'Seu email...'}))
 
     agree_toc = forms.BooleanField(required=True, label='Eu concordo com os termos do Criptosorteio')
 
