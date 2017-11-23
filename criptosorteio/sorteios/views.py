@@ -48,7 +48,7 @@ class SorteiosParticipando(LoginRequiredMixin, ListView):
         """
         Apenas sorteios do usuario
         """
-        return Participacao.objects.select_related('sorteio').filter(user=self.request.user).order_by('-date_joined')
+        return Participacao.objects.filter(user=self.request.user).select_related('sorteio').order_by('-date_joined')
 
 @login_required
 def visualizar_sorteio(request, pk):
