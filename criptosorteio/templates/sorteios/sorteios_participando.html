@@ -1,5 +1,8 @@
 {% extends 'sorteios/base_sorteios.html' %}
 
+{% block extracss %}
+<script src="https://use.fontawesome.com/c538e9d6f1.js"></script>
+{% endblock %}
 
 {% block content %}
 
@@ -29,6 +32,7 @@
                 <th colspan=2 scope="col">Sorteio</th>
                 <th scope="col">Participantes</th>
                 <th scope="col">Entrado há</th>
+                <th scope="col" class="text-center">Resultado</th>
             </tr>
         </thead>
         <tbody>
@@ -51,8 +55,19 @@
                     <a class="sorteio-time ongoing">{{ participacaoinst.sorteio.hora_sorteio | timeuntil }} restantes</a>
                     {% endif %}
                 </th>
-                <th scope>{{ participacaoinst.sorteio.participantes.count }}</th>
-                <th scope>{{ participacaoinst.date_joined }}</th>
+                <th>{{ participacaoinst.sorteio.participantes.count }}</th>
+                <th>{{ participacaoinst.date_joined }}</th>
+                <th class="text-center">
+                {% if participacaoinst.sorteio.sorteado %}
+                {% if participacaoinst.sorteio.ganhador == participacaoinst.user %}
+                <i class="fa fa-check ongoing" aria-hidden="true"></i>             
+                {% else %}
+                <i class="fa fa-times-circle warning" aria-hidden="true"></i>
+                {% endif %}
+                {% else %}
+                <i class="fa fa-minus" aria-hidden="true"></i>
+                {% endif %}
+                </th>
             </tr>
         
 

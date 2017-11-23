@@ -223,3 +223,7 @@ form .error {
 .ongoing {
   color: green !important;
 }
+
+.text-center {
+  text-align: center;
+}
