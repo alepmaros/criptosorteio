@@ -1,7 +1,12 @@
 {% extends 'sorteios/base_sorteios.html' %}
 
 {% block extracss %}
-{% include 'material/includes/material_css.html' %}
+{% load static %}
+<link href="{% static 'material/fonts/material-design-icons/material-icons.css' %}" rel="stylesheet">
+
+<link href="{% static 'css/material_modified.css' %}" rel="stylesheet">
+<link href="{% static 'material/css/materialize.forms.css' %}" rel="stylesheet">
+<link href="{% static 'material/css/jquery.datetimepicker.css' %}" rel="stylesheet">
 {% endblock%}
 
 {% block content %}
