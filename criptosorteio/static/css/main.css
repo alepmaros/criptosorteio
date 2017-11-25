@@ -193,6 +193,33 @@
   text-decoration: none;
 }
 
+.btn3 {
+  background: #ff0055;
+  background-image: -webkit-linear-gradient(top, #ff0055, #b92965);
+  background-image: -moz-linear-gradient(top, #ff0055, #b92965);
+  background-image: -ms-linear-gradient(top, #ff0055, #b92965);
+  background-image: -o-linear-gradient(top, #ff0055, #b92965);
+  background-image: linear-gradient(to bottom, #ff0055, #b92965);
+  -webkit-border-radius: 6;
+  -moz-border-radius: 6;
+  border-radius: 6px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 15px;
+  padding: 5px 10px 5px 10px;
+  text-decoration: none;
+}
+
+.btn3:hover {
+  background: #3cb0fd;
+  background-image: -webkit-linear-gradient(top, #fd3c6c, #ff0055);
+  background-image: -moz-linear-gradient(top, #fd3c6c, #ff0055);
+  background-image: -ms-linear-gradient(top, #fd3c6c, #ff0055);
+  background-image: -o-linear-gradient(top, #fd3c6c, #ff0055);
+  background-image: linear-gradient(to bottom, #fd3c6c, #ff0055);
+  text-decoration: none;
+}
+
 .messages {
   list-style-type: none;
   padding-left: 0;
@@ -226,4 +253,10 @@ form .error {
 
 .text-center {
   text-align: center;
+}
+
+.sorteio-view-button {
+  float: left;
+  margin-right: 5px;
+  margin-top: 5px;
 }

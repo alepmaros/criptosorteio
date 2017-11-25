@@ -1,10 +1,9 @@
 {% extends 'sorteios/base_sorteios.html' %}
 
 {% block content %}
+{% load static %}
 
-<h1>Visualizar Sorteio</h1>
-
-<div class="col-sm-8 mx-auto">
+<div class="col-sm-8 mx-auto sorteio-item-box">
     {% if messages %}
     <ul class="messages">
         {% for message in messages %}
@@ -14,23 +13,63 @@
         {% endfor %}
     </ul>
     {% endif %}
-
+    <div class="sorteio-users-counter">
+        {{ sorteio.participantes.count }} 
+        {% if sorteio.participantes.count == 1 %}
+            participante
+        {% else %}
+            participantes
+        {% endif %}
+    </div>
     <h1>{{ sorteio.nome }}</h1>
-    <p>{{ sorteio.descricao }}</p>
-    <p>Criado em: {{ sorteio.hora_criado }}</p>
-    <p>Será sorteado em: {{ sorteio.hora_sorteio }}</p>
-    <p>Criador: {{ sorteio.criador.username }}</p>
-    <p>Participantes: {{ sorteio.participantes.count }}</p>
+
+    <div class="sorteio-user-avatar">
+        <img src="{% static 'img/empty-user-image.png' %}">
+    </div>
+
+    <div class="sorteio-user-name-date">
+        <p>Criado por <b>{{ sorteio.criador.username }}</b> há {{ sorteio.hora_criado | timesince }}</p>
+        {% if sorteio.precisa_sortear or sorteio.sorteado %}
+        <p style="color: red">Sorteio acabou há {{ sorteio.hora_sorteio | timesince }}</p>
+        {% else %}
+        <p>{{ sorteio.hora_sorteio | timeuntil }} restantes</p>
+        {% endif %}
+    </div>
+
+    <div class="sorteio-info">
+        {% if sorteio.foto %}
+        <img src="{{ sorteioinst.foto.url }}">
+        {% else %}
+        <img src="{% static 'img/empty-project-image.jpg' %}">
+        {% endif %}
+        <p>{{ sorteio.descricao }}</p>
+    </div>
     <p>{% if sorteio.privacidade == "pub" %}Publico{% else %}Esse sorteio não está listado, cuidado com quem você compartilha esse link!{% endif %}</p>
     {% if not sorteio.sorteado and not sorteio.precisa_sortear %}
         {% if not joined %}
-        <a href="{% url 'entrar-sorteio' pk=sorteio.pk %}">Entrar Sorteio</a><br>
+        <a href="{% url 'entrar-sorteio' pk=sorteio.pk %}">
+            <div class="sorteio-view-button btn2">
+                Entrar no sorteio
+            </div>
+        </a>
         {% else %}
-        <a href="{% url 'sair-sorteio' pk=sorteio.pk %}">Sair Sorteio</a><br>
+        <a href="{% url 'sair-sorteio' pk=sorteio.pk %}">
+            <div class="sorteio-view-button btn3">
+                Sair do sorteio
+            </div>
+        </a>
         {% endif %}
         {% if owner %}
-        <a href="{% url 'editar-sorteio' pk=sorteio.pk %}">Editar Sorteio</a><br>
-        <a href="{% url 'deletar-sorteio' pk=sorteio.pk %}">Deletar Sorteio</a><br>
+        <a href="{% url 'editar-sorteio' pk=sorteio.pk %}">
+            <div class="sorteio-view-button btn2">
+                Editar sorteio
+            </div>
+        </a>
+        <a href="{% url 'deletar-sorteio' pk=sorteio.pk %}">
+            <div class="sorteio-view-button btn3">
+                Deletar sorteio
+            </div>
+        </a>
         {% endif %}
     {% else %}
         {% if not sorteio.sorteado %}
@@ -39,25 +78,31 @@
         <p style="color:green">Ganhador: {{ sorteio.ganhador.first_name }} {{ sorteio.ganhador.last_name }} ({{ sorteio.ganhador.username }}) </p>
         {% endif %}
     {% endif %}
-    <a href="{% url 'visualizar-participantes' pk=sorteio.pk %}">Visualizar Participantes e string NIST</a>
-    
+    <a href="{% url 'visualizar-participantes' pk=sorteio.pk %}">
+        <div class="sorteio-view-button btn2">
+            Participantes e string NIST
+        </div>
+    </a>
+</div>
 
+<div class="col-sm-8 mx-auto sorteio-item-box">
+    <h3>Deixe um comentário</h3>
     <div id="disqus_thread"></div>
-        <script>
-            var disqus_config = function () {
-            this.page.url = "http://localhost:8000";
-            this.page.identifier = "/sorteios/{{ sorteio.pk }}/";
-            };
-            
-            (function() { // DON'T EDIT BELOW THIS LINE
-            var d = document, s = d.createElement('script');
-            s.src = 'https://criptosorteio.disqus.com/embed.js';
-            s.setAttribute('data-timestamp', +new Date());
-            (d.head || d.body).appendChild(s);
-            })();
-        </script>
-        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    </div>
+    <script>
+        var disqus_config = function () {
+        this.page.url = "http://localhost:8000";
+        this.page.identifier = "/sorteios/{{ sorteio.pk }}/";
+        };
+        
+        (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://criptosorteio.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
 
 {% block extrajs %} <script id="dsq-count-scr" src="//criptosorteio.disqus.com/count.js" async></script> {% endblock %}
 

@@ -22,7 +22,7 @@
 {% for sorteioinst in sorteio_list %} 
 <div class="col-lg-8 mx-auto sorteio-item-box">
     <div class="sorteio-users-counter">
-        Participantes: {{ sorteioinst.participantes.count }}
+        {{ sorteioinst.participantes.count }} participantes
     </div>
     <h2>{{ sorteioinst.nome }}</h2>
     <div class="sorteio-user-info">
