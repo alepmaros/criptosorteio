@@ -15,6 +15,6 @@ Um site em Django para realizar sorteios auditáveis
 Template:
 
 ```
-* * * * * source /home/apm/.virtualenvs/criptosorteio/bin/activate && python3 /home/apm/git/criptosorteio/criptosorteio/manage.py runcrons >> /home/apm/git/criptosorteio/logs.txt
-* * * * * sleep 30 && source /home/apm/.virtualenvs/criptosorteio/bin/activate && python3 /home/apm/git/criptosorteio/criptosorteio/manage.py runcrons >> /home/apm/git/criptosorteio/logs.txt
+* * * * * . /home/ubuntu/.envs && /home/ubuntu/virtualenv/criptosorteio/bin/python3 /home/ubuntu/criptosorteio/criptosorteio/manage.py runcrons >> /home/ubuntu/cron_log.txt 2> /home/ubuntu/cron_error_log.txt
+* * * * * sleep 30 && . /home/ubuntu/.envs && /home/ubuntu/virtualenv/criptosorteio/bin/python3 /home/ubuntu/criptosorteio/criptosorteio/manage.py runcrons >> /home/ubuntu/cron_log.txt 2> /home/ubuntu/cron_error_log.txt
 ```
