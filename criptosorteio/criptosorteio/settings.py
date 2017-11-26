@@ -22,7 +22,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', default='bf+*^b8z*6*cdgg)n^87m3i7)4m5jo*w2l
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['criptosorteio.win']
 
 
 # Application definition
@@ -90,7 +90,7 @@ else:
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'criptosorteio',
-            'USER': 'criptosorteioadjango',
+            'USER': 'criptosorteiodjango',
             'PASSWORD': os.getenv('DB_PASSWORD', default='admin'),
             'HOST': 'localhost',
             'PORT': '',
@@ -147,7 +147,7 @@ LOGIN_URL = '/conta/login/'
 
 # Onde salvar as fotos
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'criptosorteio.win/media/')
 
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
