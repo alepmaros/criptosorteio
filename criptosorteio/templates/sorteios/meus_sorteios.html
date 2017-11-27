@@ -22,43 +22,44 @@
 </div>
 
 <div class="col-lg-12 mx-auto sorteio-item-box">
-
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th colspan=2 scope="col">Sorteio</th>
-                <th scope="col">Participantes</th>
-                <th scope="col">Criado há</th>
-            </tr>
-        </thead>
-        <tbody>
-    {% for sorteioinst in sorteio_list %}
-            <tr>
-                <th scope="row">
-                    <div class="sorteio-info-mini">
-                        {% if sorteioinst.foto %}
-                        <a  href="{% url 'visualizar-sorteio' pk=sorteioinst.pk %}"><img src="{{ sorteioinst.foto.url }}"></a>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th colspan=2 scope="col">Sorteio</th>
+                    <th scope="col">Participantes</th>
+                    <th scope="col">Criado há</th>
+                </tr>
+            </thead>
+            <tbody>
+        {% for sorteioinst in sorteio_list %}
+                <tr>
+                    <th scope="row">
+                        <div class="sorteio-info-mini">
+                            {% if sorteioinst.foto %}
+                            <a  href="{% url 'visualizar-sorteio' pk=sorteioinst.pk %}"><img src="{{ sorteioinst.foto.url }}"></a>
+                            {% else %}
+                            <a  href="{% url 'visualizar-sorteio' pk=sorteioinst.pk %}"><img src="{% static 'img/empty-project-image.jpg' %}"></a>
+                            {% endif %}
+                        </div>
+                    </th>
+                    <th>
+                        <a href="{% url 'visualizar-sorteio' pk=sorteioinst.pk %}">{{ sorteioinst.nome }}</a><br>
+                        {% if sorteioinst.precisa_sortear or sorteioinst.sorteado %}
+                        <a class="sorteio-time warning">Sorteio acabou há {{ sorteioinst.hora_sorteio | timesince }}</a>
                         {% else %}
-                        <a  href="{% url 'visualizar-sorteio' pk=sorteioinst.pk %}"><img src="{% static 'img/empty-project-image.jpg' %}"></a>
+                        <a class="sorteio-time ongoing">{{ sorteioinst.hora_sorteio | timeuntil }} restantes</a>
                         {% endif %}
-                    </div>
-                </th>
-                <th>
-                    <a href="{% url 'visualizar-sorteio' pk=sorteioinst.pk %}">{{ sorteioinst.nome }}</a><br>
-                    {% if sorteioinst.precisa_sortear or sorteioinst.sorteado %}
-                    <a class="sorteio-time warning">Sorteio acabou há {{ sorteioinst.hora_sorteio | timesince }}</a>
-                    {% else %}
-                    <a class="sorteio-time ongoing">{{ sorteioinst.hora_sorteio | timeuntil }} restantes</a>
-                    {% endif %}
-                </th>
-                <th scope>{{ sorteioinst.participantes.count }}</th>
-                <th scope>{{ sorteioinst.hora_criado | timesince }}</th>
-            </tr>
-        
+                    </th>
+                    <th scope>{{ sorteioinst.participantes.count }}</th>
+                    <th scope>{{ sorteioinst.hora_criado | timesince }}</th>
+                </tr>
+            
 
-    {% endfor %}
-        </tbody>
-    </table>
+        {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 {% else %}
 <div class="col-sm-8 mx-auto">
