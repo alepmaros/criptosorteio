@@ -40,7 +40,7 @@
     </section>
 
     <div class="container">
-        <div class="row home-info">
+        <div class="col-sm-10 mx-auto row home-info">
             <div class="home-item">
                 <div class="home-subtitle">
                     O que é Criptosorteio?
@@ -54,7 +54,20 @@
                     Como funciona?
                 </div>
                 <div class="home-text">
-                    Uma ferramenta que permite um sorteio que possa ser validado! Isso significa que qualquer pessoa pode verificar se o resultado do sorteio foi realmente aleatório ou foi propositalmente alterado!
+                    <p>É simples! Primeiro você criar seu sorteio, seleciona uma data para sortear e compartilha o link com qume você quer que participe.
+                    Quando der a hora do sorteio, o sistema automaticamente seleciona o vencedor com base nos seguintes passos:</p>
+                    <ul>
+                        <li>Primeiro pegamos uma chave aleatória fornecida pelo <a href="https://beacon.nist.gov/home">NIST Randomness Beacon</a>, acessível por todos.</li>
+                        <li>Depois, concatenamos essa chave com cada um dos usuários participantes do seu sorteio</li>
+                        <li>Após isso, aplicamos a função SHA256 sobre cada uma dessas entradas</li>
+                        <li>Por fim, ordenamos essa lista em ordem crescente e o primeiro colocado é o vencedor!</li>
+                    </ul>
+                    <p>Dessa forma, <u>qualquer</u> pessoa pode verificar se não houve fraudes na hora de selecionar o vencedor,
+                    afinal, a chave aleatória e os participantes estão publicamente disponíveis.</p>
+                    <p>Não entendeu muita coisa? Não tem problema! A única coisa que você precisa saber é que o nosso sistema é seguro,
+                        e caso suspeite de fraude, você pode seguir <a href="#">esse tutorial</a> mais detalhado para manualmente verificar se o ganhador
+                        é realmente aquele.
+                    </p>
                 </div>
             </div>
             <div class="home-item">
@@ -70,7 +83,7 @@
 
     <footer class="footer">
         <p>
-            <a href="https://github.com/alepmaros">Alexandre Maros</a>
+            Criptosorteio - <a href="https://github.com/alepmaros">Alexandre Maros</a>
         </p>
     </footer>
     
