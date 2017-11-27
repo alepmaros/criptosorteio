@@ -20,3 +20,11 @@ Template:
 * * * * * . /home/ubuntu/.envs && /home/ubuntu/virtualenv/criptosorteio/bin/python3 /home/ubuntu/criptosorteio/criptosorteio/manage.py runcrons >> /home/ubuntu/cron_log.txt 2> /home/ubuntu/cron_error_log.txt
 * * * * * sleep 30 && . /home/ubuntu/.envs && /home/ubuntu/virtualenv/criptosorteio/bin/python3 /home/ubuntu/criptosorteio/criptosorteio/manage.py runcrons >> /home/ubuntu/cron_log.txt 2> /home/ubuntu/cron_error_log.txt
 ```
+
+# To-do
+
+- Confirmar e-mail para cadastro
+- Password reset
+- Arrumar conflito CSS material/bootstrap
+- Adicionar sorteios privados
+- Adicionar foto perfil
