@@ -121,6 +121,10 @@
 
 .sorteio-info {
   margin: 25px 0px;
+  height: 100%;
+  float: right;
+  height:100%;
+  width:100%;
 }
 
 .sorteio-info img {
@@ -129,6 +133,22 @@
   margin-right: 25px;
   float: left;
 }
+
+.sorteio-especifico-info {
+  margin: 25px 0px;
+  float: right;
+  height:100%;
+  width:100%;
+}
+
+.sorteio-especifico-info img {
+  max-width: 300px;
+  max-height: 500px;
+  margin-right: 25px;
+  margin-bottom: 2px;
+  float: left;
+}
+
 
 .sorteio-info-mini {
   width: 50px;
@@ -260,4 +280,20 @@ form .error {
   float: left;
   margin-right: 5px;
   margin-top: 5px;
+}
+
+
+.sorteio-buttons a {
+  margin-bottom: 10px;
+}
+
+.button-box {
+  height:100%;
+  clear:both;
+  padding-bottom: 20px;
+}
+
+.sorteio-info-list {
+  list-style: none;
+  padding-left:0;
 }

@@ -21,10 +21,12 @@
 </div>
 {% for sorteioinst in sorteio_list %} 
 <div class="col-lg-8 mx-auto sorteio-item-box">
-    <div class="sorteio-users-counter">
-        {{ sorteioinst.participantes.count }} participantes
+    <div class="top-info">
+        <div class="sorteio-users-counter">
+            {{ sorteioinst.participantes.count }}{% if sorteioinst.participantes.count == 1 %} participante {% else %} participantes{% endif %}
+        </div>
+        <h2>{{ sorteioinst.nome }}</h2>
     </div>
-    <h2>{{ sorteioinst.nome }}</h2>
     <div class="sorteio-user-info">
         <div class="sorteio-user-avatar">
             <img src="{% static 'img/empty-user-image.png' %}">
@@ -48,11 +50,9 @@
             <p>{{ sorteioinst.descricao|truncatechars:650 }}</p>
         </div>
     </div>
-    <a href="{% url 'visualizar-sorteio' pk=sorteioinst.pk %}">
-        <div class="sorteio-view btn2">
-            Visualizar Sorteio
-        </div>
-    </a>
+    <div class="button-box">
+        <a class="btn btn-primary" style="float:right; height: 100%; display:block;" href="{% url 'visualizar-sorteio' pk=sorteioinst.pk %}">Visualizar Sorteio</a>
+    </div>
 </div>
 {% endfor %}
 {% else %}

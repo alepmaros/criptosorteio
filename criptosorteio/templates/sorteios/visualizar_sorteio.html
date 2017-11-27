@@ -5,7 +5,7 @@
 {% block content %}
 {% load static %}
 
-<div class="col-sm-8 mx-auto sorteio-item-box">
+<div class="col-lg-8 mx-auto">
     {% if messages %}
     <ul class="messages">
         {% for message in messages %}
@@ -15,14 +15,6 @@
         {% endfor %}
     </ul>
     {% endif %}
-    <div class="sorteio-users-counter">
-        {{ sorteio.participantes.count }} 
-        {% if sorteio.participantes.count == 1 %}
-            participante
-        {% else %}
-            participantes
-        {% endif %}
-    </div>
     <h1>{{ sorteio.nome }}</h1>
 
     <div class="sorteio-user-avatar">
@@ -38,57 +30,52 @@
         {% endif %}
     </div>
 
-    <div class="sorteio-info">
+    <div class="sorteio-especifico-info">
         {% if sorteio.foto %}
-        <img src="{{ sorteioinst.foto.url }}">
+        <img src="{{ sorteio.foto.url }}">
         {% else %}
         <img src="{% static 'img/empty-project-image.jpg' %}">
         {% endif %}
+        <h4>Descrição:</h4>
         <p>{{ sorteio.descricao }}</p>
     </div>
-    <p>{% if sorteio.privacidade == "pub" %}Publico{% else %}Esse sorteio não está listado, cuidado com quem você compartilha esse link!{% endif %}</p>
+
+    <h4>Informações:</h4>
+    <ul class="sorteio-info-list">
+        <li>{{ sorteio.participantes.count }}{% if sorteio.participantes.count == 1 %} participante {% else %} participantes{% endif %}</li>
+        <li><a style="font-weight:bold;">Privacidade:</a> {% if sorteio.privacidade == "pub" %}Publico{% else %}Esse sorteio não está listado, cuidado com quem você compartilha esse link!{% endif %}</li>
+        
+        {% if sorteio.precisa_sortear %}
+        <li style="color:red">Em processamento...</li>
+        {% elif sorteio.sorteado %}
+        <li><a style="font-weight:bold;">Ganhador:</a> <a style="color:green">{{ sorteio.ganhador.first_name }} {{ sorteio.ganhador.last_name }} ({{ sorteio.ganhador.username }})</a></li>
+        {% endif %}
+    </ul>
+    
+
     {% if not sorteio.sorteado and not sorteio.precisa_sortear %}
+    <h4>Ações:</h4>
+    
+    <div class="sorteio-buttons">
         {% if not joined %}
-        <a href="{% url 'entrar-sorteio' pk=sorteio.pk %}">
-            <div class="sorteio-view-button btn2">
-                Entrar no sorteio
-            </div>
-        </a>
+        <a class="btn btn-primary" href="{% url 'entrar-sorteio' pk=sorteio.pk %}">Entrar no sorteio</a>
         {% else %}
-        <a href="{% url 'sair-sorteio' pk=sorteio.pk %}">
-            <div class="sorteio-view-button btn3">
-                Sair do sorteio
-            </div>
-        </a>
+        <a class="btn btn-danger" href="{% url 'sair-sorteio' pk=sorteio.pk %}">Sair do sorteio</a>
         {% endif %}
         {% if owner %}
-        <a href="{% url 'editar-sorteio' pk=sorteio.pk %}">
-            <div class="sorteio-view-button btn2">
-                Editar sorteio
-            </div>
-        </a>
-        <a href="{% url 'deletar-sorteio' pk=sorteio.pk %}">
-            <div class="sorteio-view-button btn3">
-                Deletar sorteio
-            </div>
-        </a>
+        <a class="btn btn-primary" href="{% url 'editar-sorteio' pk=sorteio.pk %}">Editar sorteio</a>
+        <a class="btn btn-danger" href="{% url 'deletar-sorteio' pk=sorteio.pk %}" onclick="return confirm('Você tem certeza que quer deletar esse sorteio?');">Deletar sorteio</a>
         {% endif %}
+        <a class="btn btn-primary" href="{% url 'visualizar-participantes' pk=sorteio.pk %}">Participantes (JSON)</a>
+    </div>
     {% else %}
-        {% if not sorteio.sorteado %}
-        <p style="color:red">Em processamento...</p>
-        {% else %}
-        <p style="color:green">Ganhador: {{ sorteio.ganhador.first_name }} {{ sorteio.ganhador.last_name }} ({{ sorteio.ganhador.username }}) </p>
-        {% endif %}
+    <a class="btn btn-primary" href="{% url 'visualizar-participantes' pk=sorteio.pk %}">Participantes (JSON)</a>
     {% endif %}
-    <a href="{% url 'visualizar-participantes' pk=sorteio.pk %}">
-        <div class="sorteio-view-button btn2">
-            Participantes e string NIST
-        </div>
-    </a>
+    
 </div>
-
-<div class="col-sm-8 mx-auto sorteio-item-box">
-    <h3>Deixe um comentário</h3>
+<br>
+<div class="col-lg-8 mx-auto">
+    <h3>Comentários</h3>
     <div id="disqus_thread"></div>
     <script>
         var disqus_config = function () {
