@@ -1,4 +1,4 @@
-![Criptosorteio logo][https://github.com/alepmaros/criptosorteio/blob/master/criptosorteio/static/img/criptosorteio_logo.png]
+![Criptosorteio logo](https://github.com/alepmaros/criptosorteio/blob/master/criptosorteio/static/img/criptosorteio_logo.png)
 
 # criptosorteio
 
