@@ -37,7 +37,7 @@
         <img src="{% static 'img/empty-project-image.jpg' %}">
         {% endif %}
         <h4>Descrição:</h4>
-        <p>{{ sorteio.descricao }}</p>
+        <p>{{ sorteio.descricao | safe | linebreaks }}</p>
     </div>
 
     <h4>Informações:</h4>
