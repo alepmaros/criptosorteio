@@ -29,6 +29,7 @@
                     <th colspan=2 scope="col">Sorteio</th>
                     <th scope="col">Participantes</th>
                     <th scope="col">Criado há</th>
+                    <th scope="col">Privacidade</th>
                 </tr>
             </thead>
             <tbody>
@@ -53,6 +54,7 @@
                     </th>
                     <th scope>{{ sorteioinst.participantes.count }}</th>
                     <th scope>{{ sorteioinst.hora_criado | timesince }}</th>
+                    <th scope>{% if sorteioinst.privacidade == 'nli' %}Não listado{% else %}Público{% endif %}</th>
                 </tr>
             
 
